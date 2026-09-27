@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>萊爾富會員字母轉數字工具</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #d81e06; /* 萊爾富常見的紅色系 */
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            text-transform: uppercase; /* 輸入時自動顯示大寫 */
+        }
+        .result-box {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            min-height: 35px;
+            word-wrap: break-word;
+        }
+        .note {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>萊爾富會員轉碼工具</h1>
+    
+    <div class="input-group">
+        <label for="letterInput">請輸入英文字母代碼：</label>
+        <input type="text" id="letterInput" placeholder="例如：ABC" autocomplete="off">
+    </div>
+
+    <div class="input-group">
+        <label>轉換結果 (數字)：</label>
+        <div id="resultOutput" class="result-box"></div>
+    </div>
+
+    <div class="note">
+        編碼規則：<br>
+        A=0, B=1, C=2, D=3, E=4<br>
+        F=5, G=6, H=7, K=8, M=9<br>
+        (其他非規則內的字元將保留原樣)
+    </div>
+</div>
+
+<script>
+    // 建立根據 1000603459.jpg 圖片設定的對應字典
+    const decodingMap = {
+        'A': '0',
+        'B': '1',
+        'C': '2',
+        'D': '3',
+        'E': '4',
+        'F': '5',
+        'G': '6',
+        'H': '7',
+        'K': '8',
+        'M': '9'
+    };
+
+    const inputElement = document.getElementById('letterInput');
+    const outputElement = document.getElementById('resultOutput');
+
+    // 監聽輸入事件，實現即時轉換
+    inputElement.addEventListener('input', function(e) {
+        // 將輸入強制轉為大寫字串
+        const inputText = e.target.value.toUpperCase();
+        let resultText = '';
+
+        // 逐字元進行轉換
+        for (let i = 0; i < inputText.length; i++) {
+            const char = inputText[i];
+            // 如果字典裡有這個字母，就轉換成數字；如果沒有，就保留原本的字元
+            if (decodingMap[char] !== undefined) {
+                resultText += decodingMap[char];
+            } else {
+                resultText += char;
+            }
+        }
+
+        // 將結果顯示在畫面上
+        outputElement.textContent = resultText;
+    });
+</script>
+
+</body>
+</html>
